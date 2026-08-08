@@ -4,6 +4,16 @@
     --accent:#2F6BFF; --soft:#DCE8FF;
     --gut:clamp(16px,4vw,44px);
   }
+
+  /* The accent is swapped by setting data-side on <html>, not by writing
+     --accent from JS. Overwriting the custom property directly does not
+     re-resolve `color`/`background` on elements that already exist and declare
+     a transition on that property — Chromium keeps the old computed value, so
+     the ticker, the toggle pill, and both wordmarks stayed blue on the
+     girlfriend side while freshly-mounted nodes went pink. Changing an
+     attribute goes through normal selector matching, which does invalidate. */
+  :root[data-side="b"]{--accent:#2F6BFF; --soft:#DCE8FF}
+  :root[data-side="g"]{--accent:#F0338A; --soft:#FFDCEC}
   *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-text-size-adjust:100%;background:#fff;color-scheme:light only;scroll-behavior:smooth}
   body{font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
@@ -335,3 +345,93 @@
 .stage img.art{width:76%;max-width:520px;object-fit:contain}
 .thumbs img.art{width:100%;object-fit:contain}
 .ci .im img.art{width:100%;object-fit:contain}
+
+/* ============================================================
+   Support, legal, community — added when the free trial line
+   moved onto shopnexp.com. Everything below reuses the tokens
+   above so both sides theme themselves for free.
+   ============================================================ */
+
+.sheet.wide{max-width:640px;max-height:82vh;display:flex;flex-direction:column}
+.sheet.popup{max-width:400px}
+.sheet-head h3{font-size:16px;font-weight:800;letter-spacing:-.02em;text-transform:lowercase}
+.sheet-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:4px;transition:color .3s}
+
+.stack{display:flex;flex-direction:column;gap:9px}
+.stack input,.stack textarea{width:100%;border:1px solid var(--line);background:#fff!important;
+  color:var(--ink);font-family:inherit;font-size:13px;padding:14px 16px;border-radius:8px}
+.stack textarea{resize:vertical;line-height:1.5}
+.stack input::placeholder,.stack textarea::placeholder{color:var(--ash)}
+.stack input:focus,.stack textarea:focus{outline:none;border-color:var(--ink)}
+.stack .add{margin-top:5px}
+
+.formerr{font-size:12px;font-weight:600;color:#D93838;padding:2px 2px 0}
+.formhint{font-size:11px;color:var(--ash);text-align:center;margin-top:2px;line-height:1.5}
+.formdone{padding:26px 8px 30px;text-align:center;font-size:13px;color:var(--ash)}
+.formdone b{display:block;color:var(--ink);font-size:16px;font-weight:800;letter-spacing:-.02em;
+  text-transform:lowercase;margin-bottom:6px}
+
+.popupline{font-size:13px;color:var(--ash);line-height:1.6;margin-bottom:4px}
+.popupskip{font-size:11px;color:var(--ash);text-decoration:underline;padding:4px;margin-top:2px}
+.popupskip:hover{color:var(--ink)}
+.signupdone{display:inline-block;margin:24px auto 0;border:1px solid var(--accent);color:var(--accent);
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:16px 26px;border-radius:100px;transition:color .3s,border-color .3s}
+
+/* legal docs — long-form, scrolls inside the sheet */
+.legalbody{overflow-y:auto;padding-right:4px;-webkit-overflow-scrolling:touch}
+.legalbody section{margin-bottom:18px}
+.legalbody h4{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:6px;transition:color .3s}
+.legalbody p{font-size:13px;color:var(--ash);line-height:1.7}
+
+/* spotted wall */
+.spotted .sec-head{align-items:center}
+.linkbtn{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);white-space:nowrap;transition:color .3s}
+.spotgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(10px,3vw,20px)}
+@media(min-width:760px){.spotgrid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1100px){.spotgrid{grid-template-columns:repeat(6,1fr)}}
+.spotframe{background:var(--smoke)!important;aspect-ratio:1/1;border-radius:4px;overflow:hidden;
+  display:grid;place-items:center}
+.spotframe img{width:100%;height:100%;object-fit:cover}
+.spotpending{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ash)}
+.spotmeta{padding:9px 2px 0}
+.spotmeta b{display:block;font-size:12px;font-weight:600;letter-spacing:-.01em}
+.spotmeta small{display:block;font-size:10px;color:var(--ash);letter-spacing:.06em;
+  text-transform:uppercase;font-weight:600;margin-top:2px}
+.spotnote{font-size:12px;color:var(--ash);margin-top:20px;text-align:center}
+
+/* footer picked up two more rows; keep them visually subordinate to the first */
+.frows+.frows{margin-top:11px}
+.flegal{font-size:10px}
+.flegal button{font-size:10px}
+
+/* ---------- accent repaint fix ----------
+   Chromium freezes a declaration whose value is var(--x) when a transition is
+   declared on that same property and --x later changes on an ancestor. The
+   element keeps its old computed color indefinitely — it happens whether the
+   change comes from style.setProperty or from a selector match, and it only
+   spared nodes that remounted. Result: on the girlfriend side the ticker, the
+   toggle pill and both wordmarks stayed blue.
+
+   So the accent-driven declarations below swap instantly instead of
+   crossfading. Hover transitions are deliberately left alone: those animate on
+   a state change, with the variable only in the hovered value, and they work. */
+.ticker,
+.brand span,
+.hero h1 span,
+.eyebrow,
+.terms b em,
+.cross h3 span,
+.signup h3 span,
+.fmark span,
+.linkbtn,
+.sheet-eyebrow,
+.legalbody h4,
+.signupdone{transition:none}
+
+/* these two keep the transitions that don't touch the accent */
+.switch .glide{transition:transform .3s cubic-bezier(.3,.8,.3,1)}
+.prog i{transition:width .3s}

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
-const NAV = ['shop', 'faq', 'about'];
+const NAV = ['shop', 'spotted', 'faq', 'about'];
 
 export default function Header({ brand, activeNav }) {
   const { totals, setOpen } = useCart();

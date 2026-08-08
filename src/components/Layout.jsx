@@ -8,19 +8,21 @@ import Header from './Header';
 import Footer from './Footer';
 import CartDrawer from './CartDrawer';
 import SizeGuideModal from './SizeGuideModal';
+import ContactModal from './ContactModal';
+import LegalModal from './LegalModal';
+import SightingModal from './SightingModal';
+import EmailPopup from './EmailPopup';
 import Toast from './Toast';
 
 export default function Layout({ brand, activeNav, onSwitch, children }) {
   const { open, setOpen } = useCart();
-  const { setSizeGuideOpen } = useUI();
+  const { closeAllModals } = useUI();
   const { pathname } = useLocation();
 
-  /* The accent drives everything themed — ticker, buttons, swatch borders —
-     through two custom properties, same as the original. */
+  /* Theming is one attribute; the accent pair lives in CSS keyed off it. See
+     the data-side rules in global.css for why it isn't setProperty. */
   useEffect(() => {
-    const root = document.documentElement;
-    root.style.setProperty('--accent', brand.accent);
-    root.style.setProperty('--soft', brand.soft);
+    document.documentElement.dataset.side = brand.key;
   }, [brand]);
 
   useEffect(() => {
@@ -32,12 +34,12 @@ export default function Layout({ brand, activeNav, onSwitch, children }) {
     const onKey = (e) => {
       if (e.key === 'Escape') {
         setOpen(false);
-        setSizeGuideOpen(false);
+        closeAllModals();
       }
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [setOpen, setSizeGuideOpen]);
+  }, [setOpen, closeAllModals]);
 
   return (
     <>
@@ -54,6 +56,10 @@ export default function Layout({ brand, activeNav, onSwitch, children }) {
       <div className={'scrim' + (open ? ' on' : '')} onClick={() => setOpen(false)} />
       <CartDrawer side={brand.key} />
       <SizeGuideModal />
+      <ContactModal />
+      <LegalModal />
+      <SightingModal />
+      <EmailPopup />
       <Toast />
     </>
   );

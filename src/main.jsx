@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import App from './App';
 import { CartProvider } from './context/CartContext';
 import { UIProvider } from './context/UIContext';
@@ -15,12 +16,19 @@ if (/^#\/(b|g)(\/|$)/.test(legacy)) {
   window.history.replaceState(null, '', path + window.location.search);
 }
 
+/* Set the side before first paint so the boyfriend accent doesn't flash on a
+   girlfriend URL. Layout keeps it in sync after that. */
+document.documentElement.dataset.side =
+  window.location.pathname.startsWith('/g') ? 'g' : 'b';
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <UIProvider>
         <CartProvider>
           <App />
+          {/* cookieless, no personal data — see the privacy policy copy */}
+          <Analytics />
         </CartProvider>
       </UIProvider>
     </BrowserRouter>

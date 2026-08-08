@@ -1,9 +1,18 @@
 import { variantIdFor, variantKey } from '../data/variants';
 
-const DOMAIN = import.meta.env.VITE_SHOPIFY_DOMAIN;
-const TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN;
+/* Storefront API credentials.
+ *
+ * These default to the existing nexp-5 store, which already has a working
+ * Storefront token. Storefront tokens are public by design — they ship in the
+ * client bundle either way — so committing the default costs nothing and keeps
+ * the site working without per-environment setup. Override via .env if the
+ * free trial line ever moves to its own store. */
+const DOMAIN = import.meta.env.VITE_SHOPIFY_DOMAIN || 'nexp-5.myshopify.com';
+const TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN || '4ed19351597140bf4ef7c4039fdbe21b';
 const API_VERSION = import.meta.env.VITE_SHOPIFY_API_VERSION || '2024-10';
 const PAIR_CODE = import.meta.env.VITE_SHOPIFY_PAIR_DISCOUNT_CODE;
+
+export const SHOPIFY = { domain: DOMAIN, token: TOKEN, apiVersion: API_VERSION };
 
 export const isConfigured = () => Boolean(DOMAIN && TOKEN);
 

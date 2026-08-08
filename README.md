@@ -4,6 +4,10 @@ Two-sided storefront (boyfriend / girlfriend) for the *free trial* shirt brand.
 Ported from the original single-file `free-trial-site.html` to Vite + React with
 the visual design, copy, and behavior preserved.
 
+**This is what goes on shopnexp.com.** The previous Shop Nexp site is preserved
+at `github.com/nexpllc/shopnexp` and can be redeployed any time — nothing about
+this repo destroys it.
+
 ```bash
 npm install
 npm run dev
@@ -48,24 +52,34 @@ colorway as they get shot; no code change needed.
 product page it appears to do nothing, because a product only lives on one side
 and the route canonicalises back. That matches the original's behavior.
 
+**Accent theming is an attribute, not a JS-written variable.** `<html>` carries
+`data-side="b"` or `"g"`, and the accent pair is defined per-side in CSS.
+Writing `--accent` from JS looks like it works and doesn't: Chromium freezes a
+declaration whose value is `var(--x)` when a transition is declared on that same
+property and `--x` later changes on an ancestor, so the ticker, the toggle pill
+and both wordmarks kept the boyfriend blue on the girlfriend side. The
+accent-driven declarations therefore have `transition:none` (see the fix block
+at the bottom of `global.css`). Hover transitions are untouched. If you add a
+new accent-coloured element, don't put a transition on that property.
+
 ## Going live
 
 Steps marked **(you)** need accounts and payment details.
 
-1. **(you)** Buy the domain. `freetrial.shop` was the pick; grab
-   `freetrialboyfriend.com` too and 301 it over.
-2. **(you)** Create the Shopify store (Basic is the cheapest plan with a real checkout).
-3. **(you)** Connect Printful, upload the print files from `public/shirt-prints/`,
-   create the variants. Do this before touching code — you need the variant IDs.
-4. **(you)** Generate a Storefront API token: Settings → Apps → Develop apps →
-   Storefront API. Copy `.env.example` to `.env` and fill it in.
-5. Paste the variant IDs into `src/data/variants.js`. Every sellable combination
+The domain and the Shopify store are already handled: this ships to
+**shopnexp.com**, and checkout points at the existing **nexp-5** store, whose
+Storefront token is already live. That removes four steps from the original
+plan. What's left:
+
+1. **(you)** Add the 10 free trial products to nexp-5 as their own collection,
+   and connect them to Printful using the print files in `public/shirt-prints/`.
+2. Paste the variant IDs into `src/data/variants.js`. Every sellable combination
    needs one. Checkout refuses to run and names the missing key rather than
    silently dropping a line item.
-6. **(you)** Set up the pair discount in Shopify — see below.
-7. **(you)** Push to GitHub, connect the repo to Vercel, point the domain at it.
-   Add the `VITE_*` env vars in the Vercel project settings.
-8. **(you)** Place one real test order end to end. Cancel and refund it yourself.
+3. **(you)** Set up the pair discount in Shopify — see below.
+4. **(you)** In Vercel, point shopnexp.com at this repo instead of the old one.
+   The old deployment can be taken down; the code stays on GitHub.
+5. **(you)** Place one real test order end to end. Cancel and refund it yourself.
 
 ### The pair discount needs a Shopify counterpart
 
@@ -86,9 +100,23 @@ the site, so it's the only thing that can undercharge you.
 
 - **Replace the review quotes** in `src/data/brands.js` (`quotes` on each side).
   They're placeholder copy with invented cities. Fake reviews are an FTC problem.
+- **Replace the spotted wall placeholders** in `src/data/spotted.js`. Same
+  problem as the quotes — invented customers. Real submissions come in through
+  the form; until then the tiles read "pending", which is honest.
 - **Shoot real product photos.** One flat-lay and one on-body shot per design.
   The SVG mockups are good enough to design against, not to sell with.
-- **Wire the email capture.** `Signup.jsx` validates the format and drops it.
-  Right now signups go nowhere.
+- **Add `public/share.jpg`** at 1200×630. The og:image tag already points at it.
+- **Read the legal docs** in `src/data/legal.js` before they go live. They were
+  adapted from the Shop Nexp versions and describe how this store actually
+  operates, but they are not a lawyer's work.
 - **Check the light-mode lock on a real phone** by opening the live URL from an
   Instagram DM. That's the path most traffic takes, and the one that broke before.
+
+## What came over from Shop Nexp
+
+Contact form and spotted submissions both deliver through Web3Forms to the same
+inbox the nexp store used. The list signup writes to Shopify with
+`customerCreate` and marketing consent — the same call the old site made, so
+subscribers land in one place. Security headers, share tags and Vercel Analytics
+carried over as-is. Everything was restyled into the b/g design language rather
+than pasted in; there is no green field-department styling anywhere in here.
