@@ -435,3 +435,18 @@
 /* these two keep the transitions that don't touch the accent */
 .switch .glide{transition:transform .3s cubic-bezier(.3,.8,.3,1)}
 .prog i{transition:width .3s}
+
+/* ---------- descender room ----------
+   The display headings are set lowercase with a line-height under 1, so their
+   line box ends above where the ink does. Any margin underneath was measuring
+   from the box, not the glyphs: on the hero the y of "boyfriend" ran 14px PAST
+   the box and overlapped the paragraph, and the footer wordmark sat exactly on
+   top of the links. Padding in em gives the descender its own space and scales
+   with the clamped font sizes instead of only being right at one width. */
+.hero h1{padding-bottom:.27em}
+.fmark{padding-bottom:.26em}
+.cross h3,.signup h3,.pair h3{padding-bottom:.21em}
+
+/* with the boxes now containing their descenders, these gaps are literal */
+.hero p{margin-top:clamp(22px,2.4vw,30px)}
+.cross p,.signup p,.pair p{margin-top:16px}
