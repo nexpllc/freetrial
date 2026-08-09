@@ -46,9 +46,9 @@ export default function CartDrawer({ side }) {
     }
   }
 
-  function goToNudge(target) {
+  function goToNudge({ side: target, id }) {
     setOpen(false);
-    navigate(`/${target}/product/${target}-lockup`);
+    navigate(`/${target}/product/${id}`);
   }
 
   return (
@@ -98,13 +98,13 @@ export default function CartDrawer({ side }) {
               );
             })}
 
-            {totals.nudgeSide && (
+            {totals.nudge && (
               <div className="nudge">
                 <p>
-                  add the {BRANDS[totals.nudgeSide].word} tee
+                  add the {findProduct(totals.nudge.id)?.p.name || `${BRANDS[totals.nudge.side].word} tee`}
                   <small>save $10 on the pair, applied automatically</small>
                 </p>
-                <button onClick={() => goToNudge(totals.nudgeSide)}>add it</button>
+                <button onClick={() => goToNudge(totals.nudge)}>add it</button>
               </div>
             )}
           </>
@@ -115,7 +115,10 @@ export default function CartDrawer({ side }) {
         <div className="prog"><i style={{ width: `${totals.progress}%` }} /></div>
         <div className="progtxt"><ProgressCopy totals={totals} /></div>
         {totals.pairOff > 0 && (
-          <div className="totals disc"><span>pair discount</span><span>−{money(totals.pairOff)}</span></div>
+          <div className="totals disc">
+            <span>pair discount{totals.pairsMatched > 1 ? ` ×${totals.pairsMatched}` : ''}</span>
+            <span>−{money(totals.pairOff)}</span>
+          </div>
         )}
         <div className="totals"><span>subtotal</span><span>{money(totals.subtotal)}</span></div>
         <div className="totnote">shipping and tax calculated at checkout</div>

@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { BRANDS, FREE_SHIP, PAIR_DISCOUNT, findProduct } from '../data/brands';
+import { BRANDS, FREE_SHIP, PAIR_DISCOUNT, PAIR_SETS, findProduct } from '../data/brands';
 
 const CartContext = createContext(null);
 const STORAGE_KEY = 'freetrial.cart.v1';
@@ -70,17 +70,25 @@ export function CartProvider({ children }) {
   const totals = useMemo(() => {
     const units = lines.reduce((a, l) => a + l.qty, 0);
     const gross = lines.reduce((a, l) => a + l.qty * l.price, 0);
-    const hasB = lines.some((l) => l.id === 'b-lockup');
-    const hasG = lines.some((l) => l.id === 'g-lockup');
-    const pairOff = hasB && hasG ? PAIR_DISCOUNT : 0;
+    const ids = new Set(lines.map((l) => l.id));
+
+    /* Each matching cross-side set takes its own $10 off, so buying both the
+       trial pair and the verified pair discounts twice. */
+    const matched = PAIR_SETS.filter((p) => ids.has(p.b) && ids.has(p.g));
+    const pairOff = matched.length * PAIR_DISCOUNT;
     const subtotal = gross - pairOff;
-    const bothSides = new Set(lines.map((l) => l.side)).size === 2;
-    /* exactly one of the two lockup tees is in the cart — the other side is
-       $10 away, which is the whole reason the switch exists */
-    const nudgeSide = lines.length && hasB !== hasG ? (hasB ? 'g' : 'b') : null;
+
+    /* Holding exactly one half of a set — the other side is $10 away, which is
+       the whole reason the switch exists. */
+    const half = PAIR_SETS.find((p) => ids.has(p.b) !== ids.has(p.g));
+    const nudge = half
+      ? { side: ids.has(half.b) ? 'g' : 'b', id: ids.has(half.b) ? half.g : half.b }
+      : null;
 
     return {
-      units, gross, pairOff, subtotal, bothSides, nudgeSide,
+      units, gross, pairOff, subtotal, nudge,
+      pairsMatched: matched.length,
+      bothSides: new Set(lines.map((l) => l.side)).size === 2,
       freeShipLeft: Math.max(0, FREE_SHIP - subtotal),
       progress: Math.min(100, (subtotal / FREE_SHIP) * 100),
     };

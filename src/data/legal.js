@@ -53,7 +53,7 @@ export const LEGAL = {
       ['returns & exchanges', `Unworn, unwashed items can be returned or exchanged within 30 days of delivery. Reply to your order email or write to ${CONTACT_EMAIL} with your order number and we'll send a label. No notice period, no exit interview. Exchanges depend on remaining stock, so a different size is first-come, first-served.`],
       ['refunds', 'Approved refunds go back to your original payment method within 5–10 business days of us receiving the return. Original shipping costs are non-refundable unless we made the error.'],
       ['damaged or wrong items', `If we messed up — wrong item, defect, damage in transit — email a photo to ${CONTACT_EMAIL} within 7 days of delivery and we'll make it right at no cost to you. That one's on us.`],
-      ['final sale', "Sticker packs and anything marked final sale can't be returned."],
+      ['final sale', "Anything marked final sale can't be returned."],
     ],
   },
 };

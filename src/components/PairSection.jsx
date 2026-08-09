@@ -1,24 +1,37 @@
 import { Link } from 'react-router-dom';
-import { BRANDS } from '../data/brands';
+import { PAIR_SETS, findProduct } from '../data/brands';
 import ProductImage from './ProductImage';
 
-export default function PairSection() {
-  const b = BRANDS.b.products[0];
-  const g = BRANDS.g.products[0];
+function Half({ id }) {
+  const hit = findProduct(id);
+  if (!hit) return null;
+  const { p, side } = hit;
+  const color = p.colors.find((c) => p.images?.[c]) || p.colors[0];
 
+  return (
+    <Link className="card" to={`/${side}/product/${p.id}`}>
+      <div className="frame"><ProductImage product={p} color={color} side={side} /></div>
+    </Link>
+  );
+}
+
+export default function PairSection() {
   return (
     <section className="pair">
       <h3>get <span>the pair</span></h3>
       <p>one from each side, $50 for both. the discount applies itself in the cart — no code, no minimum.</p>
-      <div className="pairgrid">
-        <Link className="card" to="/b/product/b-lockup">
-          <div className="frame"><ProductImage product={b} color="black" side="b" /></div>
-        </Link>
-        <Link className="card" to="/g/product/g-lockup">
-          <div className="frame"><ProductImage product={g} color="black" side="g" /></div>
-        </Link>
+
+      <div className="pairsets">
+        {PAIR_SETS.map((set) => (
+          <div className="pairset" key={set.label}>
+            <div className="pairgrid">
+              <Half id={set.b} />
+              <Half id={set.g} />
+            </div>
+            <div className="pairtag">{set.label} — <b>$50 together</b></div>
+          </div>
+        ))}
       </div>
-      <div className="pairtag">$60 separately — <b>$50 together</b></div>
     </section>
   );
 }
