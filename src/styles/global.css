@@ -483,3 +483,55 @@
 @media(min-width:860px){.pairsets{grid-template-columns:repeat(2,1fr)}}
 .pairset .pairgrid{max-width:none;margin:0}
 .pairset .pairtag{margin-top:14px}
+
+/* ---------- split + pair, sized off the catalog ----------
+   The split ratio and the column counts come from --main-fr/--side-fr/--cols,
+   which DropSection derives from how many products exist. A hard-coded 4
+   columns left a two-product drop against a third of a screen of dead space
+   and blew the lone verified card up to twice its neighbours' size. */
+@media(min-width:1000px){
+  .split{grid-template-columns:minmax(0,var(--main-fr,4fr)) minmax(0,var(--side-fr,1fr))}
+}
+.split-main .grid{grid-template-columns:repeat(2,1fr)}
+@media(min-width:820px){
+  .split-main .grid{grid-template-columns:repeat(var(--cols,4),1fr)}
+}
+.split-side .grid{grid-template-columns:repeat(2,1fr)}
+@media(min-width:1000px){
+  .split-side .grid{grid-template-columns:repeat(var(--cols,1),1fr)}
+}
+
+/* each pair reads as one object, so it gets a panel and a plain label for who
+   it is actually for — the price line alone did not say */
+.pairsets{display:grid;gap:clamp(18px,2.6vw,28px);max-width:1040px;margin:28px auto 0}
+@media(min-width:860px){.pairsets{grid-template-columns:repeat(2,1fr)}}
+.pairset{background:var(--smoke)!important;border-radius:14px;
+  padding:clamp(18px,2.4vw,26px) clamp(16px,2.2vw,24px) clamp(16px,2vw,22px)}
+.pairset .frame{background:#fff!important}
+.pairset .pairgrid{max-width:none;margin:16px 0 0}
+.pairset .pairtag{margin-top:14px;display:block}
+.pairname{font-size:11px;font-weight:600;text-transform:lowercase;letter-spacing:-.01em;
+  padding:9px 2px 0;text-align:center;color:var(--ink)}
+
+/* ---------- final split geometry (supersedes the blocks above) ----------
+   One grid track per card across the entire row. Each block spans its own
+   share, and the container's column gap is the same as the inner grid gap, so
+   a block spanning n tracks absorbs exactly the n-1 gaps its own cards need.
+   Every card on the row therefore resolves to an identical width, which a
+   2fr/1fr split cannot manage: the wider block has an internal gap to swallow
+   and the narrow one does not, so its cards always come out fractionally
+   smaller. The rule sits inside the gap rather than in padding, because
+   padding would take its width back out of the cards it separates. */
+.split{display:grid;align-items:start;
+  row-gap:clamp(30px,5vw,48px);column-gap:clamp(10px,3vw,26px)}
+@media(min-width:1000px){
+  .split{grid-template-columns:var(--tpl,repeat(4,minmax(0,1fr)))}
+  .split-main{grid-column:span var(--main,3)}
+  .split-side{grid-column:span var(--side,1);position:relative;
+    border-left:0;padding-left:0}
+  .split-side::before{content:'';position:absolute;top:0;bottom:0;
+    left:calc(clamp(10px,3vw,26px) / -2);width:1px;background:var(--line)}
+}
+.split-main .grid,.split-side .grid{grid-template-columns:repeat(2,1fr)}
+@media(min-width:820px){.split-main .grid{grid-template-columns:repeat(var(--cols,4),1fr)}}
+@media(min-width:1000px){.split-side .grid{grid-template-columns:repeat(var(--cols,1),1fr)}}

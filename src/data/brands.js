@@ -62,8 +62,8 @@ const B_LOCKUP_COLORS = ['black', 'maroon'];
 
 /* Cross-side pairs that earn the discount. Both halves must be in the cart. */
 export const PAIR_SETS = [
-  { label: 'the trial pair', b: 'b-lockup', g: 'g-lockup' },
-  { label: 'the verified pair', b: 'b-taken', g: 'g-taken' },
+  { label: 'the trial pair', audience: 'for singles', b: 'b-lockup', g: 'g-lockup' },
+  { label: 'the verified pair', audience: 'for couples', b: 'b-taken', g: 'g-taken' },
 ];
 
 /* ================= brands ================= */

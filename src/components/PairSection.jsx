@@ -11,6 +11,7 @@ function Half({ id }) {
   return (
     <Link className="card" to={`/${side}/product/${p.id}`}>
       <div className="frame"><ProductImage product={p} color={color} side={side} /></div>
+      <div className="pairname">{p.name}</div>
     </Link>
   );
 }
@@ -24,6 +25,7 @@ export default function PairSection() {
       <div className="pairsets">
         {PAIR_SETS.map((set) => (
           <div className="pairset" key={set.label}>
+            <span className="eyebrow">{set.audience}</span>
             <div className="pairgrid">
               <Half id={set.b} />
               <Half id={set.g} />
