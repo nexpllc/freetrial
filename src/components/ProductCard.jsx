@@ -4,10 +4,12 @@ import { money } from '../lib/format';
 import ProductImage from './ProductImage';
 
 export default function ProductCard({ product, side }) {
-  /* Lead with a colorway we have real artwork for. Several prints only exist
-     for black, and defaulting to colors[0] showed those products as blank
-     mockups in the grid while the real art sat one swatch away. */
-  const preview = product.colors.find((c) => product.prints?.[c]) || product.colors[0];
+  /* Lead with a colourway we have real imagery for — a photograph first, then
+     a print composite. Defaulting to colors[0] showed products as blank drawn
+     mockups while the real thing sat one swatch away. */
+  const preview = product.colors.find((c) => product.images?.[c])
+    || product.colors.find((c) => product.prints?.[c])
+    || product.colors[0];
 
   return (
     <Link className="card" to={`/${side}/product/${product.id}`}>

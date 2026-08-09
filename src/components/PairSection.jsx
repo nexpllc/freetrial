@@ -12,10 +12,10 @@ export default function PairSection() {
       <p>one from each side, $50 for both. the discount applies itself in the cart — no code, no minimum.</p>
       <div className="pairgrid">
         <Link className="card" to="/b/product/b-lockup">
-          <div className="frame"><ProductImage product={b} color="trial blue" side="b" /></div>
+          <div className="frame"><ProductImage product={b} color="black" side="b" /></div>
         </Link>
         <Link className="card" to="/g/product/g-lockup">
-          <div className="frame"><ProductImage product={g} color="trial pink" side="g" /></div>
+          <div className="frame"><ProductImage product={g} color="black" side="g" /></div>
         </Link>
       </div>
       <div className="pairtag">$60 separately — <b>$50 together</b></div>
