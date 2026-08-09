@@ -503,15 +503,20 @@
 
 /* each pair reads as one object, so it gets a panel and a plain label for who
    it is actually for — the price line alone did not say */
-.pairsets{display:grid;gap:clamp(18px,2.6vw,28px);max-width:1040px;margin:28px auto 0}
+/* No panel. The shirts sit straight on the page the way the rest of the site
+   presents product, and the audience label annotates the group from above —
+   which is all the boxes were ever trying to say. */
+.pairsets{display:grid;gap:clamp(34px,5vw,64px);max-width:1080px;margin:30px auto 0}
 @media(min-width:860px){.pairsets{grid-template-columns:repeat(2,1fr)}}
-.pairset{background:var(--smoke)!important;border-radius:14px;
-  padding:clamp(18px,2.4vw,26px) clamp(16px,2.2vw,24px) clamp(16px,2vw,22px)}
-.pairset .frame{background:#fff!important}
-.pairset .pairgrid{max-width:none;margin:16px 0 0}
-.pairset .pairtag{margin-top:14px;display:block}
+.pairhead{display:flex;flex-direction:column;align-items:center;gap:2px}
+.pairhead .eyebrow{letter-spacing:.16em}
+.pairmark{width:26px;height:22px;overflow:visible}
+.pairmark path{fill:none;stroke:var(--accent);stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round}
+.pairset .pairgrid{max-width:none;margin:6px 0 0}
+.pairset .pairtag{margin-top:15px;display:block}
 .pairname{font-size:11px;font-weight:600;text-transform:lowercase;letter-spacing:-.01em;
-  padding:9px 2px 0;text-align:center;color:var(--ink)}
+  padding:9px 2px 0;text-align:center;color:var(--ash)}
 
 /* ---------- final split geometry (supersedes the blocks above) ----------
    One grid track per card across the entire row. Each block spans its own
