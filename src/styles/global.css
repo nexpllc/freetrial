@@ -450,3 +450,8 @@
 /* with the boxes now containing their descenders, these gaps are literal */
 .hero p{margin-top:clamp(22px,2.4vw,30px)}
 .cross p,.signup p,.pair p{margin-top:16px}
+
+/* the already-taken section reuses the pair layout on a dark ground, since the
+   shirts themselves are black only and read poorly on white */
+.taken{background:var(--smoke)!important}
+.taken .frame{background:#fff!important}

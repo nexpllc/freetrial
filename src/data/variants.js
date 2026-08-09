@@ -61,6 +61,12 @@ export const VARIANT_IDS = {
   'b-terms|black|L': '',
   'b-terms|black|XL': '',
 
+  // boyfriend ✓ (already taken) — black only
+  'b-taken|black|S': '',
+  'b-taken|black|M': '',
+  'b-taken|black|L': '',
+  'b-taken|black|XL': '',
+
   // sticker pack (boyfriend)
   'b-stickers|white|one size': '',
 
@@ -111,6 +117,12 @@ export const VARIANT_IDS = {
   'g-terms|black|M': '',
   'g-terms|black|L': '',
   'g-terms|black|XL': '',
+
+  // girlfriend ✓ (already taken) — black only
+  'g-taken|black|S': '',
+  'g-taken|black|M': '',
+  'g-taken|black|L': '',
+  'g-taken|black|XL': '',
 
   // sticker pack (girlfriend)
   'g-stickers|white|one size': '',

@@ -46,6 +46,7 @@ export default function ShirtArt({ product, color, side, small }) {
 
   const garment = GARMENTS[side] || GARMENTS.b;
   const c = garment[color] || garment.white;
+  const print = product.prints?.[color];
   const multi = product.lines.length > 1;
   const y = multi ? 162 : 176;
   const fontSize = multi ? 30 : 34;
@@ -88,7 +89,19 @@ export default function ShirtArt({ product, color, side, small }) {
         <path d="M300,146 C286,132 280,116 282,100" fill="none" stroke={ink} strokeWidth="2" opacity="0.28" />
       </g>
 
-      {!small && (
+      {print ? (
+        /* The real 300 DPI artwork, scaled to the chest. Keeps the mockup
+           honest — what shows here is the file that goes to Printful, not an
+           SVG approximation of it that can drift out of date. */
+        <image
+          xlinkHref={print}
+          x="125"
+          y="132"
+          width="150"
+          height="180"
+          preserveAspectRatio="xMidYMid meet"
+        />
+      ) : !small && (
         <>
           {product.lines.map((line, i) => (
             <text key={line} x="200" y={y + i * 33} textAnchor="middle" fontFamily="Poppins,sans-serif"

@@ -4,6 +4,7 @@ import StatsStrip from '../components/StatsStrip';
 import ProductGrid from '../components/ProductGrid';
 import PlanList from '../components/PlanList';
 import PairSection from '../components/PairSection';
+import TakenSection from '../components/TakenSection';
 import Quotes from '../components/Quotes';
 import SpottedWall from '../components/SpottedWall';
 import CrossSell from '../components/CrossSell';
@@ -23,6 +24,7 @@ export default function Home({ brand, onSwitch }) {
       </section>
       <PlanList brand={brand} />
       <PairSection />
+      <TakenSection />
       <Quotes brand={brand} />
       <SpottedWall compact />
       <CrossSell brand={brand} onSwitch={onSwitch} />
