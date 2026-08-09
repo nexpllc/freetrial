@@ -49,7 +49,14 @@ export default function ShirtArt({ product, color, side, small }) {
   const print = product.prints?.[color];
   const multi = product.lines.length > 1;
   const y = multi ? 162 : 176;
-  const fontSize = multi ? 30 : 34;
+
+  /* The tee body is only ~200 units wide in this viewBox, and a fixed size ran
+     long lines ("trial expired") straight off both sleeves. Scale down to fit
+     the printable width; 0.56em per character is a close enough advance width
+     for Poppins at this weight, and erring small only adds margin. */
+  const PRINT_WIDTH = 170;
+  const longest = Math.max(...product.lines.map((l) => l.length));
+  const fontSize = Math.min(multi ? 30 : 34, PRINT_WIDTH / (longest * 0.56));
 
   const edge = shade(c.fill, 0.9);
   const deep = shade(c.fill, 0.82);

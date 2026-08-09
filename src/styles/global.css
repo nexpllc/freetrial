@@ -455,3 +455,25 @@
    shirts themselves are black only and read poorly on white */
 .taken{background:var(--smoke)!important}
 .taken .frame{background:#fff!important}
+
+/* ---------- the drop, split two ways ----------
+   Trial line left, verified line right. They are different pitches — "start
+   something" versus "you are past that" — so the verified column gets its own
+   heading instead of being one more card in a single grid. Stacks on narrow
+   screens with the verified block underneath, which keeps the reading order. */
+.split{display:grid;gap:clamp(30px,5vw,48px);align-items:start}
+@media(min-width:1000px){
+  .split{grid-template-columns:minmax(0,4fr) minmax(0,1.3fr)}
+  .split-side{border-left:1px solid var(--line);padding-left:clamp(20px,2.6vw,36px)}
+}
+.split-main .grid{grid-template-columns:repeat(2,1fr)}
+@media(min-width:820px){.split-main .grid{grid-template-columns:repeat(4,1fr)}}
+
+/* one card per row in the narrow column, but side by side while stacked so it
+   does not become a single enormous shirt on a phone */
+.split-side .grid{grid-template-columns:repeat(2,1fr)}
+@media(min-width:1000px){.split-side .grid{grid-template-columns:1fr}}
+.split-side .sec-head{margin-bottom:6px}
+.split-side .sec-head h2{font-size:clamp(24px,3.6vw,34px)}
+.split-side .sec-head h2 span{color:var(--accent)}
+.split-note{font-size:13px;color:var(--ash);margin-bottom:clamp(16px,2.4vw,22px)}

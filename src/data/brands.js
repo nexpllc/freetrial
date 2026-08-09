@@ -51,6 +51,8 @@ const mockups = (id, colors) => Object.fromEntries(
 const TEE_COLORS = ['black', 'charcoal', 'forest green', 'maroon', 'navy', 'royal'];
 const EXPIRED_COLORS = [...TEE_COLORS, 'white'];
 const LOCKUP_COLORS = ['black', 'charcoal', 'dark heather', 'forest green', 'maroon', 'military green', 'navy', 'royal'];
+/* Only two colourways came back photographed for the boyfriend lockup so far. */
+const B_LOCKUP_COLORS = ['black', 'maroon'];
 /* Awaiting photography — these stay on the drawn mockup, so keep the list to
    colours we would actually order once the artwork exists. */
 const PENDING_COLORS = ['black', 'white', 'navy'];
@@ -78,7 +80,7 @@ export const BRANDS = {
       { id: 'b-lockup', name: 'free trial boyfriend tee', price: 30, was: 38, flag: 'best seller',
         lines: ['free trial', 'boyfriend'], tag: '(cancel anytime)',
         blurb: 'heavyweight cotton, boxy fit. front print, small badge on the back. he comes with the shirt.',
-        colors: PENDING_COLORS, images: {} },
+        colors: B_LOCKUP_COLORS, images: mockups('b-lockup', B_LOCKUP_COLORS) },
       { id: 'b-expired', name: 'trial expired tee', price: 30,
         lines: ['trial expired'], tag: "(she didn't renew)",
         blurb: 'for the ones who got downgraded. wear it with dignity or without, your call.',
