@@ -78,24 +78,29 @@ export function CartProvider({ children }) {
   const totals = useMemo(() => {
     const units = lines.reduce((a, l) => a + l.qty, 0);
     const gross = lines.reduce((a, l) => a + l.qty * l.price, 0);
-    const ids = new Set(lines.map((l) => l.id));
-
-    /* Each matching cross-side set takes its own $10 off, so buying both the
-       trial pair and the verified pair discounts twice. */
-    const matched = PAIR_SETS.filter((p) => ids.has(p.b) && ids.has(p.g));
-    const pairOff = matched.length * PAIR_DISCOUNT;
+    /* Any one from each side makes a pair, and it repeats: three boyfriend tees
+       against two girlfriend tees is two pairs. This deliberately matches what
+       Shopify can express — a single Buy X Get Y across the two sides — because
+       Shopify will not stack two product discounts on one order, so anything
+       narrower here would promise a total the checkout then refused to honour. */
+    const bUnits = lines.filter((l) => l.side === 'b').reduce((a, l) => a + l.qty, 0);
+    const gUnits = lines.filter((l) => l.side === 'g').reduce((a, l) => a + l.qty, 0);
+    const pairsMatched = Math.min(bUnits, gUnits);
+    const pairOff = pairsMatched * PAIR_DISCOUNT;
     const subtotal = gross - pairOff;
 
-    /* Holding exactly one half of a set — the other side is $10 away, which is
-       the whole reason the switch exists. */
-    const half = PAIR_SETS.find((p) => ids.has(p.b) !== ids.has(p.g));
-    const nudge = half
-      ? { side: ids.has(half.b) ? 'g' : 'b', id: ids.has(half.b) ? half.g : half.b }
-      : null;
+    /* One side outnumbers the other, so the next tee over there is $10 off.
+       Prefer the designed counterpart of something already in the cart. */
+    const short = bUnits === gUnits ? null : (bUnits > gUnits ? 'g' : 'b');
+    let nudge = null;
+    if (short && lines.length) {
+      const ids = new Set(lines.map((l) => l.id));
+      const set = PAIR_SETS.find((p) => ids.has(p[short === 'b' ? 'g' : 'b']));
+      nudge = { side: short, id: set ? set[short] : BRANDS[short].products[0].id };
+    }
 
     return {
-      units, gross, pairOff, subtotal, nudge,
-      pairsMatched: matched.length,
+      units, gross, pairOff, subtotal, nudge, pairsMatched,
       bothSides: new Set(lines.map((l) => l.side)).size === 2,
       freeShipLeft: Math.max(0, FREE_SHIP - subtotal),
       progress: Math.min(100, (subtotal / FREE_SHIP) * 100),

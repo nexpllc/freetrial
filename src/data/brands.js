@@ -70,7 +70,10 @@ const B_LOCKUP_COLORS = ['black', 'maroon'];
    the grid as drawn placeholders. Add them back with their `images` map the
    day the mockups exist; nothing else needs to change. */
 
-/* Cross-side pairs that earn the discount. Both halves must be in the cart. */
+/* Suggested pairings for the "get the pair" showcase and the cart nudge.
+   These are merchandising, not the discount rule: any one tee from each side
+   earns the $10, which is what the copy has always said and what Shopify's
+   single Buy X Get Y can actually enforce. See totals in CartContext. */
 export const PAIR_SETS = [
   { label: 'the trial pair', audience: 'for singles', b: 'b-lockup', g: 'g-lockup' },
   { label: 'the verified pair', audience: 'for couples', b: 'b-taken', g: 'g-taken' },
