@@ -134,11 +134,12 @@ be listed.
 
 ## Before you flip it on
 
-- **Replace the review quotes** in `src/data/brands.js` (`quotes` on each side).
-  They're placeholder copy with invented cities. Fake reviews are an FTC problem.
-- **Replace the spotted wall placeholders** in `src/data/spotted.js`. Same
-  problem as the quotes — invented customers. Real submissions come in through
-  the form; until then the tiles read "pending", which is honest.
+- ~~Replace the review quotes~~ — the invented ones are gone. `quotes` is empty
+  on both sides in `src/data/brands.js` and the strip renders nothing until you
+  add real ones as `[quote, attribution]`.
+- ~~Replace the spotted wall placeholders~~ — also gone. `src/data/spotted.js`
+  is empty and the section shows a call for the first photo instead of a grid
+  of invented customers. Add real submissions and the wall renders itself.
 - **Shoot real product photos.** One flat-lay and one on-body shot per design.
   The SVG mockups are good enough to design against, not to sell with.
 - ~~Add `public/share.jpg`~~ — done, 1200×630, generated from the real mockups.

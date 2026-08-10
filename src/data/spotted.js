@@ -1,18 +1,12 @@
-/* Community wall — real customer photos.
+/* Community wall — real customer photos, and nothing else.
  *
- * Fill `image` with e.g. "/spotted/fan1.jpg" as submissions come in. An empty
- * image renders a pending tile, so the wall reads as "waiting for yours"
- * rather than looking broken before the first photo lands.
+ * This shipped with six invented handles and invented locations. A wall of
+ * made-up customers is the same problem as made-up reviews, so it is empty
+ * until real submissions arrive through the form.
  *
- * These are placeholder handles. Replace them with real submissions before
- * launch — a wall of invented customers is the same problem as invented
- * reviews, see the quotes in brands.js. */
+ * Add them as { id, handle, loc, image } with the file in public/spotted/.
+ * The wall renders itself once there is anything in here; while it is empty
+ * the section shows the call for photos instead of a grid of placeholders.
+ */
 
-export const SPOTTED = [
-  { id: 1, handle: '@pending', loc: 'day 3 of 7', image: '' },
-  { id: 2, handle: '@pending', loc: 'trial expired', image: '' },
-  { id: 3, handle: '@pending', loc: 'the pair', image: '' },
-  { id: 4, handle: '@pending', loc: 'upgraded to premium', image: '' },
-  { id: 5, handle: '@pending', loc: 'cancelled anytime', image: '' },
-  { id: 6, handle: '@pending', loc: 'still on trial', image: '' },
-];
+export const SPOTTED = [];

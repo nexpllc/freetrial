@@ -92,9 +92,11 @@ export const BRANDS = {
     about: ['free trial boyfriend started as one line on one shirt. the idea is simple: everything in your life is a subscription now, so why not the guy holding your bag at target.',
             "every design is a straight statement with a punchline in parentheses. front print, no logo on the back, nothing that needs explaining. if it needs explaining, it doesn't get made.",
             "drops are produced once and not restocked. that's not a scarcity tactic — it's a one-person operation printing what it can actually ship."],
-    quotes: [['bought it as a joke. he wears it four days a week.', 'verified — dallas, tx'],
-             ['my boyfriend read the hang tag out loud in the car.', 'verified — tampa, fl'],
-             ['three people at the gym asked where i got it.', 'verified — columbus, oh']],
+    /* Real reviews only. The three that used to sit here were invented, cities
+       and all, and were labelled "verified" — that is the exact claim the FTC
+       treats as deceptive. Add genuine ones as [quote, attribution] and the
+       strip renders itself; leave it empty and the section stays off. */
+    quotes: [],
     products: [
       { id: 'b-lockup', name: 'free trial boyfriend tee', price: 30, was: 38, flag: 'best seller',
         lines: ['free trial', 'boyfriend'], tag: '(cancel anytime)',
@@ -124,9 +126,7 @@ export const BRANDS = {
     about: ["free trial girlfriend runs on the same joke from the other side. everything is a subscription, so here's the tier where she picks the restaurant and remembers what you said in march.",
             'same rules as the boyfriend line: one statement, one parenthetical, front print only. the punchline lands on the person wearing it, never on anyone else.',
             "drops are produced once and not restocked. buy the pair if you're that couple."],
-    quotes: [['wore it to brunch and started an argument. worth it.', 'verified — phoenix, az'],
-             ['the "i said i\'m fine" one is too accurate to be legal.', 'verified — nashville, tn'],
-             ['got the pair. we are insufferable now.', 'verified — miami, fl']],
+    quotes: [], // see the note on the boyfriend side
     products: [
       { id: 'g-lockup', name: 'free trial girlfriend tee', price: 30, was: 38, flag: 'best seller',
         lines: ['free trial', 'girlfriend'], tag: '(cancel anytime)',
