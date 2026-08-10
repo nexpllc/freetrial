@@ -4,7 +4,17 @@
 export const FREE_SHIP = 60;
 export const PAIR_DISCOUNT = 10;
 export const SIZES = ['S', 'M', 'L', 'XL', '2XL'];
-export const SOLD_OUT_SIZES = ['2XL'];
+
+/* Nothing is disabled any more. 2XL was hard-coded as sold out back when the
+   catalog was a mock; the live Shopify product has every size in stock. */
+export const SOLD_OUT_SIZES = [];
+
+/* Plus sizes cost more to print, and the Shopify variants are already priced
+   that way — 2XL is $32 against a $30 base. Read straight off the live store;
+   if you change it there, change it here or the cart quotes the wrong total. */
+export const PLUS_SIZE_UPCHARGE = { '2XL': 2, '3XL': 4, '4XL': 6, '5XL': 8 };
+
+export const sizePrice = (product, size) => product.price + (PLUS_SIZE_UPCHARGE[size] || 0);
 
 /* ================= colorways =================
    These are the real Gildan/unisex-classic-tee colours carried by Printful, and

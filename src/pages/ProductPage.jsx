@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { BRANDS, GARMENTS, SIZES, SOLD_OUT_SIZES, findProduct } from '../data/brands';
+import { BRANDS, GARMENTS, SIZES, SOLD_OUT_SIZES, findProduct, sizePrice } from '../data/brands';
 import { money } from '../lib/format';
 import { useCart } from '../context/CartContext';
 import { useUI } from '../context/UIContext';
@@ -73,9 +73,14 @@ function ProductView({ product, side }) {
     toast('trial started — ' + (product.sticker ? product.name : `${color} / ${size}`));
   }
 
+  /* Plus sizes carry an upcharge, so the price shown has to follow the chosen
+     size — quoting the base price and letting Shopify correct it at checkout
+     is exactly the kind of surprise that loses the sale. */
+    const unitPrice = sizePrice(product, size);
+
   const addLabel = product.sticker
-    ? `add to trial — ${money(product.price)}`
-    : size ? `start the trial — ${money(product.price)}` : 'select a size';
+    ? `add to trial — ${money(unitPrice)}`
+    : size ? `start the trial — ${money(unitPrice)}` : 'select a size';
 
   const variantLabel = product.sticker
     ? 'vinyl pack'
@@ -148,7 +153,7 @@ function ProductView({ product, side }) {
           <div className="micro">ships in 3–5 days. feelings not included.</div>
 
           <StickyAddBar
-            price={product.price}
+            price={unitPrice}
             variantLabel={variantLabel}
             onAdd={submit}
             addButtonRef={addRef}

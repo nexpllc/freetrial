@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { BRANDS, FREE_SHIP, PAIR_DISCOUNT, PAIR_SETS, findProduct } from '../data/brands';
+import { BRANDS, FREE_SHIP, PAIR_DISCOUNT, PAIR_SETS, findProduct, sizePrice } from '../data/brands';
 
 const CartContext = createContext(null);
 const STORAGE_KEY = 'freetrial.cart.v1';
@@ -22,7 +22,14 @@ function load() {
     const raw = localStorage.getItem(STORAGE_KEY);
     const parsed = raw ? JSON.parse(raw) : [];
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter(isLive).map((l) => ({ ...l, qty: Math.min(MAX_QTY, l.qty) }));
+    /* Re-price on load rather than trusting what was stored. A cart saved
+       before the plus-size upcharge existed would otherwise keep quoting the
+       old total forever. */
+    return parsed.filter(isLive).map((l) => ({
+      ...l,
+      qty: Math.min(MAX_QTY, l.qty),
+      price: sizePrice(findProduct(l.id).p, l.size),
+    }));
   } catch {
     return [];
   }
@@ -49,7 +56,7 @@ export function CartProvider({ children }) {
       }
       return [...prev, {
         key, id: product.id, side, name: product.name,
-        color, size, qty, price: product.price,
+        color, size, qty, price: sizePrice(product, size),
       }];
     });
     setOpen(true);
