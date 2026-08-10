@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { BRANDS, FREE_SHIP, PAIR_DISCOUNT, PAIR_SETS, findProduct, sizePrice } from '../data/brands';
+import { BRANDS, FREE_SHIP, PAIR_DISCOUNT, PAIR_SETS, findProduct } from '../data/brands';
+import { unitPrice } from '../lib/pricing';
 
 const CartContext = createContext(null);
 const STORAGE_KEY = 'freetrial.cart.v1';
@@ -28,7 +29,7 @@ function load() {
     return parsed.filter(isLive).map((l) => ({
       ...l,
       qty: Math.min(MAX_QTY, l.qty),
-      price: sizePrice(findProduct(l.id).p, l.size),
+      price: unitPrice(findProduct(l.id).p, l.color, l.size),
     }));
   } catch {
     return [];
@@ -56,7 +57,7 @@ export function CartProvider({ children }) {
       }
       return [...prev, {
         key, id: product.id, side, name: product.name,
-        color, size, qty, price: sizePrice(product, size),
+        color, size, qty, price: unitPrice(product, color, size),
       }];
     });
     setOpen(true);

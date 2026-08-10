@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { BRANDS, GARMENTS, SIZES, SOLD_OUT_SIZES, findProduct, sizePrice } from '../data/brands';
+import { BRANDS, GARMENTS, SIZES, SOLD_OUT_SIZES, findProduct } from '../data/brands';
+import { unitPrice as priceFor } from '../lib/pricing';
 import { money } from '../lib/format';
 import { useCart } from '../context/CartContext';
 import { useUI } from '../context/UIContext';
@@ -76,7 +77,7 @@ function ProductView({ product, side }) {
   /* Plus sizes carry an upcharge, so the price shown has to follow the chosen
      size — quoting the base price and letting Shopify correct it at checkout
      is exactly the kind of surprise that loses the sale. */
-    const unitPrice = sizePrice(product, size);
+    const unitPrice = priceFor(product, color, size);
 
   const addLabel = product.sticker
     ? `add to trial — ${money(unitPrice)}`
