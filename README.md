@@ -67,15 +67,35 @@ new accent-coloured element, don't put a transition on that property.
 Steps marked **(you)** need accounts and payment details.
 
 The domain and the Shopify store are already handled: this ships to
-**shopnexp.com**, and checkout points at the existing **nexp-5** store, whose
-Storefront token is already live. That removes four steps from the original
-plan. What's left:
+**shopnexp.com**, and checkout points at the existing **nexp-5** store. The
+connection is verified end to end — `cartCreate` returns a live checkout on
+`checkout.shopnexp.com` and the site's own checkout button lands there.
 
-1. **(you)** Add the 10 free trial products to nexp-5 as their own collection,
-   and connect them to Printful using the print files in `public/shirt-prints/`.
-2. Paste the variant IDs into `src/data/variants.js`. Every sellable combination
-   needs one. Checkout refuses to run and names the missing key rather than
-   silently dropping a line item.
+What's left:
+
+1. **(you)** Create the five missing products. Only `NEXP Free Trial Boyfriend
+   Tee` exists on nexp-5; `trial expired`, `boyfriend ✓`, `free trial
+   girlfriend`, `subscribe now` and `girlfriend ✓` are not there.
+
+   If you made them in Printful, they still have to be **pushed to Shopify and
+   published to the sales channel this app's Storefront token can read**. A
+   product that is only a draft, or published to Online Store but not to the
+   custom app, is invisible here — which is exactly what the API reports today.
+   `npm run sync-variants` tells you what the token can actually see.
+
+2. Map them. Add each new handle to `HANDLES` in `tools/sync-variants.mjs`, then:
+
+   ```
+   npm run sync-variants            # report only
+   npm run sync-variants -- --write # regenerate src/data/variants.js
+   ```
+
+   The script reads ids off the live store, checks every price against the site,
+   and lists store handles no catalog product has claimed. Matching is by
+   explicit handle and never by name — an earlier fuzzy version bound
+   `boyfriend ✓ tee` to the free trial boyfriend product because both titles
+   contain "boyfriend", which would have shipped the wrong shirt on every order.
+
 3. **(you)** Set up the pair discount in Shopify — see below.
 4. **(you)** In Vercel, point shopnexp.com at this repo instead of the old one.
    The old deployment can be taken down; the code stays on GitHub.
@@ -86,15 +106,31 @@ plan. What's left:
 The $10 pair discount is priced **in this app**. Shopify knows nothing about it,
 so if you do nothing, the cart shows $50 and the customer gets charged $60.
 
-Two ways to close that gap:
+It can now fire **more than once**: `PAIR_SETS` in `brands.js` defines the trial
+pair and the verified pair, and each matched set takes its own $10. Four shirts
+that complete both pairs discount $20. Whatever you build in Shopify has to be
+per-matched-pair, not a flat $10 per order.
 
-- **Automatic discount (preferred).** Create one in Shopify admin that fires when
-  one lockup tee from each side is in the cart. Nothing to configure here.
-- **Discount code.** Create the code, then set `VITE_SHOPIFY_PAIR_DISCOUNT_CODE`
-  and `src/lib/shopify.js` applies it when the discount is active.
+Two ways to close the gap:
+
+- **Automatic discount (preferred).** Create one in Shopify admin that fires per
+  matching pair. Nothing to configure here.
+- **Discount code.** Create the code, set `VITE_SHOPIFY_PAIR_DISCOUNT_CODE`, and
+  `src/lib/shopify.js` applies it whenever a pair discount is active.
 
 Either way, verify it with a real test order. This is the only pricing logic on
 the site, so it's the only thing that can undercharge you.
+
+### Sizes and prices come from Shopify
+
+`PLUS_SIZE_UPCHARGE` in `brands.js` mirrors the live variants: 2XL is $32
+against a $30 base, and 3XL–5XL run $34/$36/$38. If you change a price in
+Shopify, change it here too — `npm run sync-variants` flags any disagreement.
+
+The site sells S–2XL. Shopify also carries **3XL, 4XL and 5XL**, plus **White**
+on the boyfriend lockup. They're left off because the size guide has no
+measurements above XL and there is no white mockup. Supply either and they can
+be listed.
 
 ## Before you flip it on
 
@@ -105,7 +141,7 @@ the site, so it's the only thing that can undercharge you.
   the form; until then the tiles read "pending", which is honest.
 - **Shoot real product photos.** One flat-lay and one on-body shot per design.
   The SVG mockups are good enough to design against, not to sell with.
-- **Add `public/share.jpg`** at 1200×630. The og:image tag already points at it.
+- ~~Add `public/share.jpg`~~ — done, 1200×630, generated from the real mockups.
 - **Read the legal docs** in `src/data/legal.js` before they go live. They were
   adapted from the Shop Nexp versions and describe how this store actually
   operates, but they are not a lawyer's work.
