@@ -59,7 +59,6 @@ const mockups = (id, colors) => Object.fromEntries(
 );
 
 const TEE_COLORS = ['black', 'charcoal', 'forest green', 'maroon', 'navy', 'royal'];
-const EXPIRED_COLORS = [...TEE_COLORS, 'white'];
 const LOCKUP_COLORS = ['black', 'charcoal', 'dark heather', 'forest green', 'maroon', 'military green', 'navy', 'royal'];
 /* Only two colourways came back photographed for the boyfriend lockup so far. */
 const B_LOCKUP_COLORS = ['black', 'maroon'];
@@ -105,10 +104,6 @@ export const BRANDS = {
         lines: ['free trial', 'boyfriend'], tag: '(cancel anytime)',
         blurb: 'heavyweight cotton, boxy fit. front print, small badge on the back. he comes with the shirt.',
         colors: B_LOCKUP_COLORS, images: mockups('b-lockup', B_LOCKUP_COLORS) },
-      { id: 'b-expired', name: 'trial expired tee', price: 30,
-        lines: ['trial expired'], tag: "(she didn't renew)",
-        blurb: 'for the ones who got downgraded. wear it with dignity or without, your call.',
-        colors: EXPIRED_COLORS, images: mockups('b-expired', EXPIRED_COLORS) },
       { id: 'b-taken', name: 'boyfriend ✓ tee', price: 30, flag: 'new', taken: true,
         lines: ['boyfriend'], tag: "(i'm taken)",
         blurb: 'the checkmark does the talking. six colourways, all dark — the badge needs a deep ground to read.',
@@ -135,10 +130,6 @@ export const BRANDS = {
         lines: ['free trial', 'girlfriend'], tag: '(cancel anytime)',
         blurb: 'heavyweight cotton, boxy fit. front print, small badge on the back. she comes with the shirt.',
         colors: LOCKUP_COLORS, images: mockups('g-lockup', LOCKUP_COLORS) },
-      { id: 'g-subscribe', name: 'subscribe now tee', price: 30, flag: 'new',
-        lines: ['subscribe now'], tag: '(auto-renews monthly)',
-        blurb: 'the trial converted itself. no confirmation email, no cancellation window, no way out.',
-        colors: TEE_COLORS, images: mockups('g-subscribe', TEE_COLORS) },
       { id: 'g-taken', name: 'girlfriend ✓ tee', price: 30, flag: 'new', taken: true,
         lines: ['girlfriend'], tag: "(i'm taken)",
         blurb: 'the checkmark does the talking. six colourways, all dark — the badge needs a deep ground to read.',
