@@ -9,6 +9,7 @@ export function UIProvider({ children }) {
   const [contactOpen, setContactOpen] = useState(false);
   const [sightingOpen, setSightingOpen] = useState(false);
   const [legalDoc, setLegalDoc] = useState(null); // 'privacy' | 'terms' | 'shipping'
+  const [video, setVideo] = useState(null); // a VIDEOS entry, or null
   const timer = useRef();
 
   const toast = useCallback((msg) => {
@@ -22,13 +23,15 @@ export function UIProvider({ children }) {
 
   /* The email popup checks this before firing — nobody should get interrupted
      while they're reading terms or typing a message. */
-  const anyModalOpen = sizeGuideOpen || contactOpen || sightingOpen || Boolean(legalDoc);
+  const anyModalOpen = sizeGuideOpen || contactOpen || sightingOpen
+    || Boolean(legalDoc) || Boolean(video);
 
   const closeAllModals = useCallback(() => {
     setSizeGuideOpen(false);
     setContactOpen(false);
     setSightingOpen(false);
     setLegalDoc(null);
+    setVideo(null);
   }, []);
 
   return (
@@ -38,6 +41,7 @@ export function UIProvider({ children }) {
       contactOpen, setContactOpen,
       sightingOpen, setSightingOpen,
       legalDoc, setLegalDoc,
+      video, setVideo,
       anyModalOpen, closeAllModals,
     }}>
       {children}

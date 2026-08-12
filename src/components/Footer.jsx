@@ -38,7 +38,10 @@ export default function Footer({ brand, onSwitch }) {
         <button type="button" onClick={() => setLegalDoc('shipping')}>shipping &amp; returns</button>
       </div>
 
-      <div className="fine">© 2026 free trial. printed and shipped from cape coral, fl. a nexp brand.</div>
+      {/* No street-level origin anywhere on the site: it is the owner's home
+          address, and since fulfilment moved to a print partner it was not
+          accurate either. */}
+      <div className="fine">© 2026 free trial. printed to order. a nexp brand.</div>
     </footer>
   );
 }

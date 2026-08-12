@@ -4,6 +4,7 @@ import DropSection from '../components/DropSection';
 import PlanList from '../components/PlanList';
 import PairSection from '../components/PairSection';
 import Quotes from '../components/Quotes';
+import VideoWall from '../components/VideoWall';
 import SpottedWall from '../components/SpottedWall';
 import CrossSell from '../components/CrossSell';
 import Signup from '../components/Signup';
@@ -17,6 +18,7 @@ export default function Home({ brand, onSwitch }) {
       <PlanList brand={brand} />
       <PairSection />
       <Quotes brand={brand} />
+      <VideoWall />
       <SpottedWall compact />
       <CrossSell brand={brand} onSwitch={onSwitch} />
       <Signup />

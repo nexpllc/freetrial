@@ -46,7 +46,7 @@ export const LEGAL = {
     updated: 'last updated: august 8, 2026',
     body: [
       ['made to order', "Each piece is printed after you order it rather than pulled from stock — that's what keeps runs small. Printing takes 3–5 business days before shipping begins. You get a tracking link by email the moment it leaves production."],
-      ['where it ships from', 'Printed and shipped from Cape Coral, Florida.'],
+      ['where it ships from', 'Orders are produced and dispatched by our print partner from whichever of its facilities is closest to your delivery address, which is what keeps transit times down.'],
       ['delivery', 'After printing: US delivery usually takes 4–10 business days. International delivery typically takes 10–30 business days depending on destination and customs. All timeframes are estimates, not guarantees — carriers and customs are outside our control.'],
       ['shipping costs', 'Free standard shipping on US orders over $60. Under that, and for international destinations, shipping is calculated at checkout based on destination.'],
       ['customs & duties', "International orders may be charged import duties or taxes by your own country. Those are set by your government, not us, and are the buyer's responsibility."],

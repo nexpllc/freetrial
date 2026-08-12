@@ -11,6 +11,7 @@ import SizeGuideModal from './SizeGuideModal';
 import ContactModal from './ContactModal';
 import LegalModal from './LegalModal';
 import SightingModal from './SightingModal';
+import VideoModal from './VideoModal';
 import EmailPopup from './EmailPopup';
 import Toast from './Toast';
 
@@ -59,6 +60,7 @@ export default function Layout({ brand, activeNav, onSwitch, children }) {
       <ContactModal />
       <LegalModal />
       <SightingModal />
+      <VideoModal />
       <EmailPopup />
       <Toast />
     </>

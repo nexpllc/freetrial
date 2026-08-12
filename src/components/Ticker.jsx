@@ -1,7 +1,7 @@
 export default function Ticker({ brand }) {
   const beats = [
     brand.ticker,
-    'printed in cape coral, fl',
+    'printed to order, never restocked',
     'one from each side — $50',
     '30-day returns, no exit interview',
   ];

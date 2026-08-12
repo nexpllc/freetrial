@@ -11,7 +11,7 @@ export default function About({ brand, onSwitch }) {
           {brand.about.map((para) => <p key={para}>{para}</p>)}
 
           <h4>how it's made</h4>
-          <p>240gsm ringspun cotton, boxy relaxed cut, printed and shipped from cape coral, florida. every order comes with the insert card and the hang tag, because the packaging is half the joke.</p>
+          <p>240gsm ringspun cotton, boxy relaxed cut, printed to order rather than pulled from a stack in a garage. every order comes with the insert card and the hang tag, because the packaging is half the joke.</p>
 
           <h4>who's behind it</h4>
           <p>a nexp brand. one person, a heat press, and a group chat that wouldn't let the idea die.</p>

@@ -19,7 +19,7 @@ export default function FAQ({ brand, onSwitch }) {
           <p>boxy and relaxed, unisex sizing. true to size for the intended look, size down if you want it fitted. chest in inches: S 20 / M 21.5 / L 23 / XL 24.5. 240gsm ringspun cotton, pre-shrunk.</p>
 
           <h4>how long is shipping?</h4>
-          <p>printed and shipped from cape coral, florida. 3–5 business days to print, then standard post. free over $60.</p>
+          <p>every shirt is printed to order — 3–5 business days to print, then standard post. free over $60.</p>
 
           <h4>can i return it?</h4>
           <p>30 days, unworn and unwashed. reply to your order email and we'll send a label. no exit interview.</p>

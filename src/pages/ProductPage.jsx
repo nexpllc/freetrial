@@ -45,7 +45,7 @@ function Details({ product }) {
 
       <details>
         <summary>shipping &amp; cancellation</summary>
-        <div className="bd">printed and shipped from cape coral, fl in 3–5 business days. free over $60. 30-day returns on unworn items — reply to your order email and we'll send a label. no notice period, no exit interview.</div>
+        <div className="bd">printed to order in 3–5 business days, then shipped. free over $60. 30-day returns on unworn items — reply to your order email and we'll send a label. no notice period, no exit interview.</div>
       </details>
     </>
   );
