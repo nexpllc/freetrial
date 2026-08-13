@@ -593,3 +593,33 @@
 /* The ticker and the stats strip stay deliberately full-bleed: they carry no
    --gut padding, and the edge-to-edge band is what separates them from the
    measured content above and below. */
+
+/* ---------- mobile header and grid ----------
+   Two fixes for narrow screens, both visible on an iPhone.
+
+   1. The header ran nav / brand / cart on one row. Past four nav items the
+      middle column had nowhere to go and the wordmark collided with "ABOUT".
+      The brand now owns a centred top row with the cart beside it, and the nav
+      sits on its own row underneath.
+
+   2. The product grids were pinned to two columns regardless of how many
+      products existed, so a single-product column drew its shirt at half the
+      screen with dead space next to it. --mcols carries the real count (capped
+      at two) so one product fills the width. */
+@media (max-width: 720px) {
+  header{
+    grid-template-columns:1fr auto 1fr;
+    grid-template-areas:". brand cart" "nav nav nav";
+    row-gap:14px;
+    padding-bottom:12px;
+  }
+  /* grid-area alone — adding grid-column:auto here would override the column
+     half of the shorthand and drop both back into the first track. */
+  .brand{grid-area:brand}
+  .cartbtn{grid-area:cart;align-self:center}
+  .nav{grid-area:nav;justify-content:center;gap:18px}
+}
+
+.split-main .grid,.split-side .grid{grid-template-columns:repeat(var(--mcols,2),1fr)}
+@media(min-width:820px){.split-main .grid{grid-template-columns:repeat(var(--cols,4),1fr)}}
+@media(min-width:1000px){.split-side .grid{grid-template-columns:repeat(var(--cols,1),1fr)}}
