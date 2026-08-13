@@ -623,3 +623,14 @@
 .split-main .grid,.split-side .grid{grid-template-columns:repeat(var(--mcols,2),1fr)}
 @media(min-width:820px){.split-main .grid{grid-template-columns:repeat(var(--cols,4),1fr)}}
 @media(min-width:1000px){.split-side .grid{grid-template-columns:repeat(var(--cols,1),1fr)}}
+
+/* ---------- product stage centring ----------
+   .stage centres its grid items, but the image sits inside a wrapper div that
+   stretches to the full stage width. Centring the wrapper therefore did
+   nothing, and the image — 76% of that full width — sat flush against the left
+   edge with the remainder as dead space on the right. Most visible on a phone,
+   where the stage is the whole screen.
+
+   Make the wrapper a centring container in its own right rather than relying
+   on the stage to place a full-width child. */
+.stage > div{width:100%;display:grid;place-items:center}
