@@ -576,9 +576,20 @@
   background:#000!important}
 .videoplayer iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
-/* With only one product per column the derived grid gives each card the full
-   column — around 580px, which is an absurd size for a product tile. Cap the
-   card and centre it so the row stays balanced whether a column holds one
-   product or four. */
-.split .grid{justify-items:center}
-.split .card{width:100%;max-width:360px}
+/* ---------- content width ----------
+   Every section pads itself with --gut, and nothing ever capped the line
+   length, so on a wide monitor the whole page stretched edge to edge and the
+   product row pulled apart. Growing --gut past a threshold centres all of it
+   inside a fixed measure without touching a single section rule.
+
+   Capping the card instead was the wrong fix: it shrank the shirt but left the
+   column at full width, so the tile floated in the middle of a mostly empty
+   grid cell — smaller AND more sparse. Constrain the container, let the card
+   fill its column. */
+@media (min-width: 1440px) {
+  :root { --gut: calc((100vw - 1280px) / 2); }
+}
+
+/* The ticker and the stats strip stay deliberately full-bleed: they carry no
+   --gut padding, and the edge-to-edge band is what separates them from the
+   measured content above and below. */
