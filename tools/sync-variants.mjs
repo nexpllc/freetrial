@@ -34,7 +34,10 @@ const API = process.env.VITE_SHOPIFY_API_VERSION || '2024-10';
 /* Catalog id -> Shopify handle. Add a line as each product is created; the
    script prints the available handles when one is missing. */
 const HANDLES = {
-  'b-lockup': 'nexp-free-trial-boyfriend-tee',
+  /* Superseded nexp-free-trial-boyfriend-tee, which carried three colourways.
+     The replacement is a separate Shopify product rather than an edit, so the
+     old one still exists — keep pointing at this handle, not that one. */
+  'b-lockup': 'free-trial-boyfriend-tee',
   'b-expired': 'nexp-trial-expired-boyfriend-tee',
   'b-taken': 'nexp-boyfriend-verfied-tee', // note: "verfied" is the store's typo
   'g-lockup': 'nexp-free-trial-girlfriend-tee',

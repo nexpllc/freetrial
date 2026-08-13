@@ -60,8 +60,11 @@ const mockups = (id, colors) => Object.fromEntries(
 
 const TEE_COLORS = ['black', 'charcoal', 'forest green', 'maroon', 'navy', 'royal'];
 const LOCKUP_COLORS = ['black', 'charcoal', 'dark heather', 'forest green', 'maroon', 'military green', 'navy', 'royal'];
-/* Only two colourways came back photographed for the boyfriend lockup so far. */
-const B_LOCKUP_COLORS = ['black', 'maroon'];
+/* The boyfriend lockup is its own list because it is the one tee that carries
+   white. White needs the dark-ink print file rather than the light one every
+   dark colourway uses, so it only became sellable once that variant override
+   existed in Printful. */
+const B_LOCKUP_COLORS = ['black', 'charcoal', 'forest green', 'maroon', 'navy', 'white'];
 
 /* Every product listed below is photographed. Designs without a mockup —
    upgrade to premium, terms & conditions, the girlfriend expired tee, and both
