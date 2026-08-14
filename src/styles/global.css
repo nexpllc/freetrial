@@ -634,3 +634,14 @@
    Make the wrapper a centring container in its own right rather than relying
    on the stage to place a full-width child. */
 .stage > div{width:100%;display:grid;place-items:center}
+
+/* ---------- dark tile behind pale garments ----------
+   The grid and the product stage both sit on --smoke, which is near enough to
+   a white tee that the garment loses its edge entirely: what reads is a print
+   floating on a panel, not a shirt. Any colourway flagged light in SHELL gets
+   an ink tile instead, so the silhouette has something to sit against.
+
+   .taken .frame already set a per-product tile, so the pattern and the
+   !important it needs to beat the base rule are both established. */
+.frame.onlight,
+.stage.onlight{background:#101114!important}

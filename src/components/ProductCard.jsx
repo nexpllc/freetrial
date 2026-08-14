@@ -13,7 +13,7 @@ export default function ProductCard({ product, side }) {
 
   return (
     <Link className="card" to={`/${side}/product/${product.id}`}>
-      <div className="frame">
+      <div className={`frame${GARMENTS[side][preview]?.light ? ' onlight' : ''}`}>
         {product.flag && <span className="flag">{product.flag}</span>}
         <ProductImage product={product} color={preview} side={side} />
         <span className="quick">view</span>

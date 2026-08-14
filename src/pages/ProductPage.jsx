@@ -91,7 +91,7 @@ function ProductView({ product, side }) {
     <>
       <div className="pwrap">
         <div>
-          <div className="stage">
+          <div className={`stage${GARMENTS[side][color]?.light ? ' onlight' : ''}`}>
             <span className="plabel">{product.sticker ? 'vinyl pack' : 'front print'}</span>
             <div><ProductImage product={product} color={color} side={side} /></div>
           </div>

@@ -45,6 +45,10 @@ const garmentsFor = (side) => Object.fromEntries(
   Object.entries(SHELL).map(([name, s]) => [name, {
     fill: s.fill,
     stroke: s.stroke,
+    /* Carried through so the tile behind the garment can go dark for a pale
+       colourway. On the default smoke tile a white tee has almost no edge and
+       reads as a floating print rather than a shirt. */
+    light: Boolean(s.light),
     main: s.light ? '#101114' : '#FFFFFF',
     accent: s.light ? INK[side].onLight : INK[side].onDark,
     sub: s.light ? '#8B9099' : '#C4CAD4',
